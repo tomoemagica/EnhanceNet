@@ -8,10 +8,10 @@ if not os.path.exists('output'):
     os.makedirs('output')
 for fn in fns:
     fne = ''.join(fn.split('.')[:-1])
-    if os.path.isfile('output/%s-EnhanceNet.png' % fne):
+    if os.path.isfile('output/%s.png' % fne):
         print('skipping %s' % fn)
         continue
-    imgs = loadimg('input/'+fn)
+    imgs = loadimg('input/'+fn, 1)
     if imgs is None:
         continue
     imgs = np.expand_dims(imgs, axis=0)
@@ -35,7 +35,7 @@ for fn in fns:
     tf.train.Saver().restore(sess, os.getcwd()+'/weights')
     output = sess.run([ys_est, ys_res+PER_CHANNEL_MEANS],
                       feed_dict={xs: imgs-PER_CHANNEL_MEANS})
-    saveimg(output[0][0], 'output/%s-EnhanceNet.png' % fne)
-    saveimg(output[1][0], 'output/%s-Bicubic.png' % fne)
+    saveimg(output[0][0], 'output/%s.png' % fne)
+#   saveimg(output[1][0], 'output/%s-Bicubic.png' % fne)
     sess.close()
     tf.reset_default_graph()
