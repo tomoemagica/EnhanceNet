@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 from nnlib import *
+import tensorflow as tf
+import logging
+import warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=Warning)
+tf.get_logger().setLevel('INFO')
+tf.autograph.set_verbosity(0)
+tf.get_logger().setLevel(logging.ERROR)
 
 PER_CHANNEL_MEANS = np.array([0.47614917, 0.45001204, 0.40904046])
 fns = sorted([fn for fn in os.listdir('input/')])
